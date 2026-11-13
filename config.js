@@ -15,8 +15,8 @@ window.VIRUTA_CONFIG = {
    *             "https://script.google.com/macros/s/XXXX/exec"
    */
   endpoints: {
-    clients: "https://script.google.com/a/macros/fi.unju.edu.ar/s/AKfycbwOCP2JSt5FezULeHB1inRtTqHuD0tyZs5cQaPouOMXYWlEiJKycz7_ArKm9ud0F-k-/exec",
-    workshops: "https://script.google.com/a/macros/fi.unju.edu.ar/s/AKfycbwOCP2JSt5FezULeHB1inRtTqHuD0tyZs5cQaPouOMXYWlEiJKycz7_ArKm9ud0F-k-/exec"
+    clients: "https://script.google.com/macros/s/AKfycbxTEE9iYl6EBWsYwaOkbmB_Fj0hXF0yifo93RYCCu1cCeKCa5FJFaVcfiDArksoFLcvBg/exec",
+    workshops: "https://script.google.com/macros/s/AKfycbxTEE9iYl6EBWsYwaOkbmB_Fj0hXF0yifo93RYCCu1cCeKCa5FJFaVcfiDArksoFLcvBg/exec"
   },
 
   /* Valor fijo del campo "source" en cada payload */
