@@ -71,27 +71,121 @@
     setRole(workshop ? "workshop" : "client");
   })();
 
-  /* ---------- Dato de validacion desde config.js ---------- */
-  (function renderContent() {
-    var metricsEl = document.getElementById("metrics");
-    if (metricsEl) (CONFIG.metrics || []).forEach(function (m) {
-      var card = document.createElement("div");
-      card.className = "metric";
-      card.innerHTML =
-        '<div class="metric-value"></div><div class="metric-label"></div><div class="metric-detail"></div>';
-      card.children[0].textContent = m.value;
-      card.children[1].textContent = m.label;
-      card.children[2].textContent = m.detail || "";
-      metricsEl.appendChild(card);
+  /* ---------- Beneficios (beneficios.js) ---------- */
+  (function renderBenefits() {
+    var B = window.VIRUTA_BENEFICIOS || {};
+    function fill(listKey, data) {
+      var list = document.querySelector('[data-benefits="' + listKey + '"]');
+      if (!list || !data || !data.tarjetas) return;
+      var items = list.querySelectorAll(".benefit");
+      items.forEach(function (li, i) {
+        var t = data.tarjetas[i];
+        if (!t || (!t.titulo && !t.texto)) { li.hidden = true; return; }
+        li.querySelector("h3").textContent = t.titulo || "";
+        li.querySelector("p").textContent = t.texto || "";
+        li.querySelector("p").hidden = !t.texto;
+      });
+    }
+    fill("cliente", B.cliente);
+    fill("taller", B.taller);
+
+    var c = B.cliente || {}, w = B.taller || {};
+    if (c.premioTester) {
+      document.getElementById("tester-label").textContent =
+        "Quiero participar como tester activo de la versión beta y recibir " + c.premioTester + ".";
+    }
+    if (w.condicionFundador) {
+      document.getElementById("founder-label").textContent =
+        "Acepto recibir proyectos verificados y " + w.condicionFundador + ".";
+    }
+    if (w.beneficioFundador) document.getElementById("founder-text").textContent = w.beneficioFundador;
+    else document.getElementById("founder-note").hidden = true;
+  })();
+
+  /* ---------- Carrusel de datos de la encuesta (config.js -> encuesta) ---------- */
+  (function surveyCarousel() {
+    var E = CONFIG.encuesta || {};
+    var datos = E.datos || [];
+    var root = document.getElementById("survey");
+    if (!root) return;
+    if (!datos.length) { root.closest("section").hidden = true; return; }
+
+    var track = document.getElementById("survey-track");
+    var dots = document.getElementById("survey-dots");
+    var slides = [];
+    var current = 0, timer = null, paused = false;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var ms = Math.max(3, E.segundosPorDato || 6) * 1000;
+
+    datos.forEach(function (d, i) {
+      var slide = document.createElement("div");
+      slide.className = "survey-slide";
+      slide.setAttribute("role", "group");
+      slide.setAttribute("aria-roledescription", "dato");
+      slide.setAttribute("aria-label", (i + 1) + " de " + datos.length);
+      slide.innerHTML = '<div class="survey-stat"></div><div class="survey-body"><p class="survey-text"></p><p class="survey-source"></p></div>';
+      slide.querySelector(".survey-stat").textContent = d.valor;
+      slide.querySelector(".survey-text").textContent = d.texto;
+      slide.querySelector(".survey-source").textContent =
+        "Fuente: " + (d.fuente || E.fuente || "Encuesta Viruta") + (d.muestra ? " · " + d.muestra : "");
+      slide.hidden = i !== 0;
+      track.appendChild(slide);
+      slides.push(slide);
+
+      var dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "survey-dot";
+      dot.setAttribute("role", "tab");
+      dot.setAttribute("aria-label", "Dato " + (i + 1));
+      dot.setAttribute("aria-selected", i === 0 ? "true" : "false");
+      dot.addEventListener("click", function () { go(i); restart(); });
+      dots.appendChild(dot);
     });
 
-    var v = CONFIG.validation || {};
-    if (v.percent) document.getElementById("val-percent").textContent = v.percent;
-    document.getElementById("val-text").textContent = v.text || "";
-    document.getElementById("val-source").textContent = v.sourceLabel || "";
-    document.getElementById("val-highlight").textContent = v.highlight || "";
-    if (!v.sourceLabel) document.getElementById("val-source").hidden = true;
-    if (!v.highlight) document.getElementById("val-highlight").hidden = true;
+    if (datos.length < 2) { root.querySelector(".survey-controls").hidden = true; return; }
+
+    function go(i) {
+      var n = slides.length;
+      i = ((i % n) + n) % n;
+      if (i === current) return;
+      slides[current].hidden = true;
+      dots.children[current].setAttribute("aria-selected", "false");
+      current = i;
+      slides[current].hidden = false;
+      slides[current].classList.remove("fade-in");
+      void slides[current].offsetWidth;
+      slides[current].classList.add("fade-in");
+      dots.children[current].setAttribute("aria-selected", "true");
+    }
+    function restart() {
+      clearInterval(timer);
+      if (reduce || paused) return;
+      timer = setInterval(function () { go(current + 1); }, ms);
+    }
+
+    document.getElementById("survey-prev").addEventListener("click", function () { go(current - 1); restart(); });
+    document.getElementById("survey-next").addEventListener("click", function () { go(current + 1); restart(); });
+
+    root.addEventListener("mouseenter", function () { paused = true; restart(); });
+    root.addEventListener("mouseleave", function () { paused = false; restart(); });
+    root.addEventListener("focusin", function () { paused = true; restart(); });
+    root.addEventListener("focusout", function () { paused = false; restart(); });
+    document.addEventListener("visibilitychange", function () { paused = document.hidden; restart(); });
+
+    /* Deslizar con el dedo en celulares */
+    var startX = null, startY = null;
+    track.addEventListener("touchstart", function (e) {
+      startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+    }, { passive: true });
+    track.addEventListener("touchend", function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      var dy = e.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { go(current + (dx < 0 ? 1 : -1)); restart(); }
+      startX = null;
+    }, { passive: true });
+
+    restart();
   })();
 
   /* ---------- Validacion ---------- */
@@ -250,8 +344,9 @@
     if (kind === "client") {
       var first = (payload.fullName || "").split(" ")[0];
       title.textContent = first ? "Listo, " + first + ". Ya estás en la lista" : "Ya estás en la lista";
+      var premio = (window.VIRUTA_BENEFICIOS && window.VIRUTA_BENEFICIOS.cliente || {}).premioTester;
       text.textContent = payload.isBetaTester
-        ? "Te vamos a escribir apenas abra la beta. Como tester, tu primer diseño 3D va bonificado."
+        ? "Te vamos a escribir apenas abra la beta para sumarte como tester." + (premio ? " Vas a recibir " + premio + "." : "")
         : "Te vamos a escribir apenas abra la beta en tu zona.";
     } else {
       title.textContent = "Taller pre-inscripto";

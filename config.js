@@ -3,7 +3,9 @@
  * ------------------------------------------------------------
  * Este es el UNICO archivo que necesitas tocar para:
  *   1. Conectar el formulario a un backend real (endpoints).
- *   2. Cambiar el dato de validacion (sale de las encuestas del proyecto).
+ *   2. Cambiar los datos del carrusel de la encuesta.
+ *
+ * Los textos de los beneficios estan en beneficios.js.
  */
 window.VIRUTA_CONFIG = {
   /*
@@ -22,11 +24,23 @@ window.VIRUTA_CONFIG = {
   /* Valor fijo del campo "source" en cada payload */
   source: "solar_train_hackathon_landing",
 
-  /* Bloque de validacion de campo: dato real de la encuesta a clientes (31 respuestas) */
-  validation: {
-    percent: "58%",
-    text: "de las personas encuestadas dice que su mayor frustración al amueblar es calcular mal las medidas y que el mueble no entre.",
-    sourceLabel: "Encuesta Viruta Jujuy 2026 · 31 respuestas",
-    highlight: "100% de los talleres cotiza con medidas y tipo de madera"
+  /*
+   * Carrusel "datos de la encuesta". Cada item es una diapositiva.
+   * Todos los numeros salen de requisitos/requisitos_funcionales.md
+   * (encuesta a clientes: 31 respuestas; encuesta a talleres: 4 respuestas).
+   * Para sumar, quitar o reordenar datos, edita esta lista.
+   */
+  encuesta: {
+    fuente: "Encuesta Viruta Jujuy 2026",
+    segundosPorDato: 6,
+    datos: [
+      { valor: "58%", texto: "de las personas encuestadas dice que su mayor frustración al amueblar es calcular mal las medidas y que el mueble no entre.", muestra: "31 clientes" },
+      { valor: "87%", texto: "le pone 4 o 5 sobre 5 a poder ver el mueble en su casa con realidad aumentada antes de fabricarlo.", muestra: "31 clientes" },
+      { valor: "81%", texto: "usaría el diseño en 3D para crear sus propios muebles a medida.", muestra: "31 clientes" },
+      { valor: "90%", texto: "dice que hoy le cuesta encontrar planos o guías para hacer sus muebles.", muestra: "31 clientes" },
+      { valor: "84%", texto: "le da 8 o más sobre 10 a poder cotizar los materiales con proveedores locales.", muestra: "31 clientes" },
+      { valor: "100%", texto: "de los talleres necesita las medidas y el tipo de madera para poder cotizar.", muestra: "4 talleres" },
+      { valor: "100%", texto: "de los talleres quiere recibir los pedidos por WhatsApp.", muestra: "4 talleres" }
+    ]
   }
 };

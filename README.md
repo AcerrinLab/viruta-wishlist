@@ -9,7 +9,8 @@ viruta-landing/
 ├── index.html        Landing con toggle Cliente / Taller y los dos formularios
 ├── styles.css        Sistema de diseño Warm Craft Minimal (temas verde y nogal)
 ├── app.js            Toggle de rol, validación, armado del payload y envío
-├── config.js         LO ÚNICO QUE HAY QUE EDITAR: endpoints y dato de validación
+├── config.js         Endpoints del formulario y datos del carrusel de la encuesta
+├── beneficios.js     Textos de los beneficios (hoy "A definir", a decidir en equipo)
 ├── privacidad.html   Política de privacidad (borrador)
 ├── terminos.html     Términos de la lista de espera (borrador)
 ├── vercel.json       URLs limpias y headers
@@ -50,8 +51,12 @@ Subí la carpeta a un repo, importalo en Vercel con preset "Other" y cada push s
 
 ## Antes de compartirla: editar `config.js`
 
-1. **Dato de validación.** Muestra el 58% de la encuesta a clientes (31 respuestas) y el 100% de la encuesta a talleres (4 respuestas). Si sumás encuestas, actualizalo ahí.
+1. **Carrusel de la encuesta.** En `config.js > encuesta.datos`, cada ítem es un dato (valor, texto y muestra). Todos salen de `requisitos_funcionales.md`.
 2. **Endpoints.** Mientras `endpoints.clients` y `endpoints.workshops` estén vacíos, la página está en **modo demo**: muestra el mensaje de éxito y escribe el payload en la consola del navegador, pero **no guarda los datos**. Cargá una URL antes de mandar la página a gente real.
+
+## Beneficios
+
+Los textos de las tarjetas de beneficios, el recuadro "Beneficio exclusivo" y los premios de los checkboxes están en `beneficios.js`. Hoy dicen "A definir". Un texto vacío (`""`) oculta ese elemento.
 
 ## Integración con el backend
 
