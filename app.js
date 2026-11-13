@@ -12,6 +12,25 @@
   var roleButtons = document.querySelectorAll("[data-role-btn]");
 
   /* ---------- Toggle de rol ---------- */
+  /* Pastilla de vidrio que se desliza entre las opciones (estilo iOS) */
+  var toggle = document.querySelector(".role-toggle");
+  var thumb = document.querySelector(".role-thumb");
+  var thumbTimer = null;
+  function moveThumb(animate) {
+    if (!thumb) return;
+    var active = document.querySelector('[data-role-btn][aria-selected="true"]');
+    if (!active) return;
+    thumb.style.width = active.offsetWidth + "px";
+    thumb.style.transform = "translateX(" + active.offsetLeft + "px)";
+    if (animate) {
+      toggle.classList.add("is-moving");
+      clearTimeout(thumbTimer);
+      thumbTimer = setTimeout(function () { toggle.classList.remove("is-moving"); }, 420);
+    }
+  }
+  window.addEventListener("resize", function () { moveThumb(false); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveThumb(false); });
+
   function setRole(role, opts) {
     opts = opts || {};
     if (role !== "client" && role !== "workshop") role = "client";
@@ -23,6 +42,7 @@
       btn.tabIndex = active ? 0 : -1;
     });
     panel.setAttribute("aria-labelledby", role === "client" ? "tab-client" : "tab-workshop");
+    moveThumb(opts.animate);
 
     var showSuccess = !success.hidden && opts.keepSuccess;
     document.querySelectorAll("[data-show]").forEach(function (el) {
@@ -102,90 +122,28 @@
     else document.getElementById("founder-note").hidden = true;
   })();
 
-  /* ---------- Subtitulo animado con datos de la encuesta (config.js -> encuesta) ---------- */
-  (function surveyTicker() {
+  /* ---------- Tarjetas con datos de la encuesta (config.js -> encuesta) ---------- */
+  (function surveyCards() {
     var E = CONFIG.encuesta || {};
     var datos = E.datos || [];
-    var root = document.getElementById("survey");
-    if (!root) return;
-    if (!datos.length) { root.hidden = true; return; }
-
-    var track = document.getElementById("survey-track");
-    var dots = document.getElementById("survey-dots");
-    var slides = [], current = 0, timer = null, paused = false;
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var ms = Math.max(3, E.segundosPorDato || 5) * 1000;
-    root.style.setProperty("--ticker-ms", ms + "ms");
-
-    datos.forEach(function (d, i) {
-      var slide = document.createElement("p");
-      slide.className = "ticker-slide" + (i === 0 ? " is-active" : "");
-      slide.setAttribute("aria-hidden", i === 0 ? "false" : "true");
-      slide.innerHTML = '<strong class="ticker-stat"></strong> <span class="ticker-text"></span> <span class="ticker-src"></span>';
-      slide.querySelector(".ticker-stat").textContent = d.valor;
-      slide.querySelector(".ticker-text").textContent = d.texto;
-      slide.querySelector(".ticker-src").textContent =
-        (d.fuente || E.fuente || "Encuesta Viruta") + (d.muestra ? " · " + d.muestra : "");
-      track.appendChild(slide);
-      slides.push(slide);
-
-      var dot = document.createElement("button");
-      dot.type = "button";
-      dot.className = "ticker-dot" + (i === 0 ? " is-active" : "");
-      dot.setAttribute("role", "tab");
-      dot.setAttribute("aria-label", "Dato " + (i + 1) + " de " + datos.length);
-      dot.setAttribute("aria-selected", i === 0 ? "true" : "false");
-      dot.innerHTML = "<span></span>";
-      dot.addEventListener("click", function () { go(i); restart(); });
-      dots.appendChild(dot);
+    var grid = document.getElementById("survey-grid");
+    if (!grid) return;
+    if (!datos.length) { grid.closest("section").hidden = true; return; }
+    datos.forEach(function (d) {
+      var txt = d.texto || "";
+      var cut = txt.indexOf(". ");
+      var dato = cut > -1 ? txt.slice(0, cut + 1) : txt;
+      var respuesta = cut > -1 ? txt.slice(cut + 2) : "";
+      var li = document.createElement("li");
+      li.className = "survey-card glass";
+      li.innerHTML = '<div class="survey-value"></div><p class="survey-fact"></p><p class="survey-answer"></p>';
+      li.querySelector(".survey-value").textContent = d.valor;
+      li.querySelector(".survey-fact").textContent = dato;
+      var ans = li.querySelector(".survey-answer");
+      if (respuesta) ans.textContent = respuesta; else ans.remove();
+      grid.appendChild(li);
     });
-
-    if (datos.length < 2) { dots.hidden = true; return; }
-
-    function go(i) {
-      var n = slides.length;
-      i = ((i % n) + n) % n;
-      if (i === current) return;
-      slides[current].classList.remove("is-active");
-      slides[current].setAttribute("aria-hidden", "true");
-      dots.children[current].classList.remove("is-active");
-      dots.children[current].setAttribute("aria-selected", "false");
-      current = i;
-      slides[current].classList.add("is-active");
-      slides[current].setAttribute("aria-hidden", "false");
-      var dot = dots.children[current];
-      dot.classList.remove("is-active"); void dot.offsetWidth; dot.classList.add("is-active");
-      dot.setAttribute("aria-selected", "true");
-    }
-    function restart() {
-      clearInterval(timer);
-      root.classList.toggle("is-paused", paused || reduce);
-      if (reduce || paused) return;
-      var dot = dots.children[current];
-      dot.classList.remove("is-active"); void dot.offsetWidth; dot.classList.add("is-active");
-      timer = setInterval(function () { go(current + 1); }, ms);
-    }
-
-    root.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") { paused = true; restart(); } });
-    root.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") { paused = false; restart(); } });
-    root.addEventListener("focusin", function () { paused = true; restart(); });
-    root.addEventListener("focusout", function () { paused = false; restart(); });
-    document.addEventListener("visibilitychange", function () { paused = document.hidden; restart(); });
-
-    /* Deslizar con el dedo en celulares */
-    var startX = null, startY = null;
-    track.addEventListener("touchstart", function (e) {
-      startX = e.touches[0].clientX; startY = e.touches[0].clientY;
-    }, { passive: true });
-    track.addEventListener("touchend", function (e) {
-      if (startX === null) return;
-      var dx = e.changedTouches[0].clientX - startX;
-      var dy = e.changedTouches[0].clientY - startY;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { go(current + (dx < 0 ? 1 : -1)); restart(); }
-      startX = null;
-    }, { passive: true });
-
-    restart();
+    document.getElementById("survey-note").textContent = "Fuente: " + (E.fuente || "Encuesta Viruta 2026");
   })();
 
   /* ---------- Validacion ---------- */

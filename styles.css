@@ -420,3 +420,83 @@ select option { color: var(--ink); }
   .ticker-dot.is-active span::after { animation: none; transform: scaleX(1); }
   .blob { animation: none; }
 }
+
+/* ---------- Selector de rol: liquid glass estilo iOS ---------- */
+.role-toggle.glass {
+  position: relative; isolation: isolate;
+  padding: 5px; gap: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.18) 100%);
+  border: 1px solid rgba(255,255,255,.7);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  backdrop-filter: blur(24px) saturate(190%);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,.95),
+    inset 0 -1px 1px rgba(255,255,255,.35),
+    inset 0 0 0 .5px rgba(28,28,26,.06),
+    0 10px 30px -12px rgba(28,28,26,.22),
+    0 2px 6px -2px rgba(28,28,26,.08);
+}
+.role-toggle.glass::before { opacity: .8; background: linear-gradient(180deg, rgba(255,255,255,.7) 0%, rgba(255,255,255,0) 55%); }
+.role-toggle > .role-thumb {
+  position: absolute; top: 5px; bottom: 5px; left: 0; z-index: 0; width: 0;
+  border-radius: 9999px; pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(255,255,255,.18) 0%, rgba(255,255,255,0) 55%),
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 80%, #fff 20%) 0%, var(--accent) 60%, color-mix(in srgb, var(--accent) 88%, #000 12%) 100%);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.65),
+    inset 0 -1.5px 2px rgba(0,0,0,.22),
+    inset 0 0 0 1px rgba(255,255,255,.16),
+    0 8px 20px -8px var(--accent),
+    0 2px 5px rgba(28,28,26,.12);
+  transition:
+    transform .5s cubic-bezier(.34, 1.36, .48, 1),
+    width .5s cubic-bezier(.34, 1.36, .48, 1),
+    scale .25s var(--ease),
+    background .4s var(--ease), box-shadow .4s var(--ease);
+}
+/* brillo especular arriba y reflejo abajo, como una gota de vidrio */
+.role-toggle > .role-thumb::before {
+  content: ""; position: absolute; left: 8%; right: 8%; top: 1.5px; height: 42%;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(255,255,255,.26), rgba(255,255,255,0));
+}
+.role-toggle > .role-thumb::after {
+  content: ""; position: absolute; left: 22%; right: 22%; bottom: 1px; height: 22%;
+  border-radius: 9999px; background: rgba(255,255,255,.08); filter: blur(2px);
+}
+.role-toggle.is-moving > .role-thumb { scale: 1.06 .9; }
+.role-toggle:active > .role-thumb { scale: 1.03 .95; }
+.role-toggle .role-btn { position: relative; z-index: 1; background: transparent !important; box-shadow: none !important; transition: color .35s var(--ease); }
+.role-toggle .role-btn[aria-selected="true"] { color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,.18); }
+.role-toggle .role-btn[aria-selected="false"] { color: var(--ink-muted); }
+.role-toggle .role-btn[aria-selected="false"]:hover { color: var(--ink); }
+@supports not (color: color-mix(in srgb, red, blue)) {
+  .role-toggle > .role-thumb { background: var(--accent); }
+}
+
+/* ---------- Tarjetas con datos de la encuesta ---------- */
+.survey-section { text-align: center; }
+.survey-grid {
+  list-style: none; margin: 0 auto; padding: 0; max-width: 1040px;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+}
+.survey-card {
+  flex: 1 1 220px; max-width: 250px; text-align: left;
+  border-radius: var(--radius-lg); padding: 16px 18px;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.survey-card:hover { transform: translateY(-2px); }
+.survey-value { font-size: 30px; line-height: 34px; font-weight: 800; letter-spacing: -0.03em; color: var(--accent-ink); transition: color .4s var(--ease); }
+.survey-fact { margin-top: 6px; font-size: 14px; line-height: 20px; font-weight: 600; color: var(--ink); }
+.survey-answer { margin-top: 6px; font-size: 13px; line-height: 19px; color: var(--ink-muted); }
+.survey-note { margin-top: 14px; font-size: 12px; color: var(--ink-soft); }
+@media (max-width: 560px) {
+  .survey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .survey-card { max-width: none; padding: 14px; }
+  .survey-value { font-size: 26px; line-height: 30px; }
+  .survey-fact { font-size: 13px; line-height: 18px; }
+  .survey-answer { font-size: 12px; line-height: 17px; }
+  .survey-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (max-width: 340px) { .survey-grid { grid-template-columns: 1fr; } }

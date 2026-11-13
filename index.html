@@ -50,6 +50,7 @@
     <section class="hero container">
 
       <div class="role-toggle glass" role="tablist" aria-label="Elegí tu perfil">
+        <span class="role-thumb" aria-hidden="true"></span>
         <button type="button" role="tab" id="tab-client" class="role-btn" data-role-btn="client" aria-selected="true" aria-controls="panel">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
           Soy Cliente / Diseñador
@@ -229,6 +230,13 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- Datos de la encuesta (config.js -> encuesta) -->
+    <section class="container section survey-section" aria-labelledby="survey-title">
+      <h2 class="section-label" id="survey-title">Lo que nos dijo Jujuy</h2>
+      <ul class="survey-grid" id="survey-grid"></ul>
+      <p class="survey-note" id="survey-note"></p>
     </section>
 
     <!-- Stack -->
