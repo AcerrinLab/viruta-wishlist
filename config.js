@@ -15,8 +15,8 @@ window.VIRUTA_CONFIG = {
    *             "https://script.google.com/macros/s/XXXX/exec"
    */
   endpoints: {
-    clients: "https://script.google.com/macros/s/AKfycbxTEE9iYl6EBWsYwaOkbmB_Fj0hXF0yifo93RYCCu1cCeKCa5FJFaVcfiDArksoFLcvBg/exec",
-    workshops: "https://script.google.com/macros/s/AKfycbxTEE9iYl6EBWsYwaOkbmB_Fj0hXF0yifo93RYCCu1cCeKCa5FJFaVcfiDArksoFLcvBg/exec"
+    clients: "https://script.google.com/macros/s/AKfycbzLh4EGeEcPfuxgEFZGJPSlQlpIqBMgd8Ul-oTTrZ02Ndhupxhkee67JGirziDqHvXhwg/exec",
+    workshops: "https://script.google.com/macros/s/AKfycbzLh4EGeEcPfuxgEFZGJPSlQlpIqBMgd8Ul-oTTrZ02Ndhupxhkee67JGirziDqHvXhwg/exec"
   },
 
   /* Valor fijo del campo "source" en cada payload */
