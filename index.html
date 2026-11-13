@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Viruta · Lista de espera</title>
+  <meta name="description" content="Viruta: infraestructura digital y modelado paramétrico para conectar artesanos de la madera con diseños contemporáneos a medida. Sumate a la lista de espera de la beta en Jujuy." />
+  <meta name="theme-color" content="#2B4C38" />
+  <meta property="og:title" content="Viruta · Lista de espera beta Jujuy" />
+  <meta property="og:description" content="Diseñá tus muebles a medida en 3D y conectá con talleres locales de Jujuy. O sumá tu taller y recibí proyectos con planos listos." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-role="client">
+  <div class="ambient" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#" aria-label="Viruta, inicio">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+          <rect x="1" y="1" width="38" height="38" rx="10" class="mark-bg" />
+          <path d="M9 27c6-1 11-5 13-11 1-3 4-5 9-5" class="mark-curl" />
+          <path d="M9 31h22" class="mark-plank" />
+          <path d="M12 21c4-1 7-3 8-7" class="mark-curl mark-curl-2" />
+        </svg>
+        <span class="brand-name">Viruta</span>
+      </a>
+      <span class="phase-badge">
+        <span class="dot" aria-hidden="true"></span>
+        Fase Beta Jujuy · Solar Train Hackathon · jujuy.dev
+      </span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero container">
+      <p class="eyebrow">Infraestructura digital y modelado paramétrico para conectar artesanos de la madera con diseños contemporáneos a medida</p>
+
+      <div class="role-toggle" role="tablist" aria-label="Elegí tu perfil">
+        <button type="button" role="tab" id="tab-client" class="role-btn" data-role-btn="client" aria-selected="true" aria-controls="panel">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
+          Soy Cliente / Diseñador
+        </button>
+        <button type="button" role="tab" id="tab-workshop" class="role-btn" data-role-btn="workshop" aria-selected="false" aria-controls="panel">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 12-8.5 8.5a2.12 2.12 0 0 1-3-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25a1.5 1.5 0 0 1 0-2.12l.52-.52a1.5 1.5 0 0 0 0-2.12l-1.6-1.6a1.5 1.5 0 0 0-2.12 0l-.52.52a1.5 1.5 0 0 1-2.12 0L12.5 3.36"/></svg>
+          Soy Carpintero / Taller
+        </button>
+      </div>
+
+      <div class="hero-grid" id="panel" role="tabpanel" aria-labelledby="tab-client">
+        <!-- Propuesta de valor -->
+        <div class="value">
+          <div data-show="client">
+            <h1>Diseñá tus muebles a medida con precisión milimétrica</h1>
+            <p class="lead">Modelá tus ideas en 3D para tu espacio real y conectá con talleres locales de Jujuy para fabricar con seña asegurada.</p>
+            <ul class="benefits">
+              <li class="benefit">
+                <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/></svg></span>
+                <div><h3>3D en tu espacio</h3><p>Visualizá cada mueble a escala real en el ambiente donde va a vivir.</p></div>
+              </li>
+              <li class="benefit">
+                <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></span>
+                <div><h3>Despiece automático</h3><p>Placas, cantos y herrajes exactos, calculados a partir de tu diseño.</p></div>
+              </li>
+              <li class="benefit">
+                <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span>
+                <div><h3>Seña protegida</h3><p>Custodia de pagos vía Mercado Pago Escrow hasta que el mueble esté en marcha.</p></div>
+              </li>
+            </ul>
+          </div>
+
+          <div data-show="workshop" hidden>
+            <p class="kicker">Tengo una carpintería o taller</p>
+            <h1>Multiplicá tus presupuestos aprobados</h1>
+            <p class="lead">Planos digitales listos para el banco de trabajo y cero visitas a ciegas.</p>
+            <ul class="benefits">
+              <li class="benefit">
+                <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg></span>
+                <div><h3>Planos técnicos listos</h3><p>Medidas de corte milimétricas y herrajes especificados para cada pieza.</p></div>
+              </li>
+              <li class="benefit">
+                <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+                <div><h3>Cero visitas a ciegas</h3><p>Ahorrá más de 6 horas semanales cotizando sobre datos ya validados.</p></div>
+              </li>
+              <li class="benefit">
+                <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="m15 15 1.5 1.5L19 14"/></svg></span>
+                <div><h3>Cobro de seña verificado</h3><p>Comenzá a cortar con la seña resguardada vía Mercado Pago.</p></div>
+              </li>
+            </ul>
+            <p class="founder-note">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14z"/><path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12"/></svg>
+              <span><strong>Beneficio exclusivo:</strong> bonificación de 3 meses en comisiones para talleres fundadores.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Formularios -->
+        <div class="form-card">
+          <!-- Formulario A: Cliente -->
+          <form id="form-client" data-show="client" novalidate>
+            <h2>Sumate a la lista de espera</h2>
+            <p class="form-sub">Te avisamos apenas abra la beta en tu zona.</p>
+
+            <div class="field">
+              <label for="nombre_apellido">Nombre y apellido</label>
+              <input id="nombre_apellido" name="nombre_apellido" type="text" placeholder="Valentina Morales" autocomplete="name" required />
+              <p class="error-msg" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="nombre@correo.com" autocomplete="email" required />
+              <p class="error-msg" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="telefono_whatsapp_c">Teléfono / WhatsApp <span class="optional">opcional</span></label>
+              <input id="telefono_whatsapp_c" name="telefono_whatsapp" type="tel" placeholder="+54 9 388 456-7890" autocomplete="tel" />
+              <p class="error-msg" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="localidad_jujuy">Localidad</label>
+              <div class="select-wrap">
+                <select id="localidad_jujuy" name="localidad_jujuy" required>
+                  <option value="" disabled selected>Elegí tu localidad</option>
+                  <option>San Salvador de Jujuy (Centro / Los Perales / Alto La Viña / Cuyaya)</option>
+                  <option>Palpalá</option>
+                  <option>Perico / El Carmen (Valles)</option>
+                  <option>San Pedro de Jujuy</option>
+                  <option>Libertador General San Martín (Ledesma)</option>
+                  <option>Tilcara / Humahuaca / Purmamarca (Quebrada)</option>
+                  <option>La Quiaca / Abra Pampa (Puna)</option>
+                  <option>Otra localidad de Jujuy</option>
+                </select>
+              </div>
+              <p class="error-msg" aria-live="polite"></p>
+            </div>
+            <label class="check">
+              <input type="checkbox" name="es_tester_beta" checked />
+              <span class="check-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg></span>
+              <span>Quiero participar como tester activo de la versión beta y recibir 1 diseño 3D bonificado.</span>
+            </label>
+            <button type="submit" class="btn-primary">
+              <span class="btn-label">Unirme como Cliente</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <!-- Formulario B: Taller -->
+          <form id="form-workshop" data-show="workshop" hidden novalidate>
+            <h2>Pre-inscribí tu taller</h2>
+            <p class="form-sub">Cupos fundadores limitados por zona.</p>
+
+            <div class="field">
+              <label for="nombre_taller">Nombre del taller</label>
+              <input id="nombre_taller" name="nombre_taller" type="text" placeholder="Taller La Quebrada Muebles" autocomplete="organization" required />
+              <p class="error-msg" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="email_contacto">Email de contacto</label>
+              <input id="email_contacto" name="email_contacto" type="email" placeholder="taller@mueblesjujuy.com" autocomplete="email" required />
+              <p class="error-msg" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="telefono_whatsapp_w">Teléfono / WhatsApp</label>
+              <input id="telefono_whatsapp_w" name="telefono_whatsapp" type="tel" placeholder="+54 9 388 456-7890" autocomplete="tel" required />
+              <p class="error-msg" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="zona_cobertura">Zona de cobertura</label>
+              <div class="select-wrap">
+                <select id="zona_cobertura" name="zona_cobertura" required>
+                  <option value="" disabled selected>Elegí tu zona</option>
+                  <option>San Salvador de Jujuy y alrededores (Gran Jujuy)</option>
+                  <option>Palpalá y Perico</option>
+                  <option>Zona Valles (El Carmen, San Antonio, Monterrico)</option>
+                  <option>Zona Ramal (San Pedro, Ledesma)</option>
+                  <option>Zona Quebrada y Puna</option>
+                  <option>Toda la Provincia de Jujuy</option>
+                </select>
+              </div>
+              <p class="error-msg" aria-live="polite"></p>
+            </div>
+            <fieldset class="field">
+              <legend>Tipo de taller <span class="optional">opcional</span></legend>
+              <div class="segmented">
+                <label><input type="radio" name="tipo_taller" value="ARTESANAL_TRADICIONAL" /><span>Artesanal tradicional</span></label>
+                <label><input type="radio" name="tipo_taller" value="MELAMINA_PLACAS" /><span>Melamina / placas</span></label>
+                <label><input type="radio" name="tipo_taller" value="DIGITAL_CNC_MIXTO" /><span>Digital / CNC / Mixto</span></label>
+              </div>
+            </fieldset>
+            <label class="check">
+              <input type="checkbox" name="acepta_terminos_fundador" checked />
+              <span class="check-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg></span>
+              <span>Acepto recibir proyectos verificados y acceder al beneficio de 0% comisión los primeros 3 meses.</span>
+            </label>
+            <button type="submit" class="btn-primary">
+              <span class="btn-label">Pre-Inscribir mi Taller</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <!-- Estado de exito -->
+          <div class="success" id="success" hidden tabindex="-1">
+            <span class="success-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>
+            <h2 id="success-title">Ya estás en la lista</h2>
+            <p id="success-text">Te vamos a escribir apenas abra la beta en tu zona.</p>
+            <button type="button" class="btn-outline" id="success-reset">Cargar otra inscripción</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Validacion -->
+    <section class="container section">
+      <div class="validation">
+        <div class="validation-stat" id="val-percent">58%</div>
+        <div class="validation-body">
+          <p class="validation-text" id="val-text"></p>
+          <div class="validation-meta">
+            <span class="pill pill-soft" id="val-source"></span>
+            <span class="pill pill-accent" id="val-highlight"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stack -->
+    <section class="container section stack">
+      <h2 class="section-label">Arquitectura de confianza</h2>
+      <ul class="stack-pills">
+        <li class="pill">Spring Boot 3</li>
+        <li class="pill">Three.js CAD</li>
+        <li class="pill">Gemini AI Vision</li>
+        <li class="pill">Mercado Pago Escrow</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 Viruta. San Salvador de Jujuy, Argentina.</p>
+      <nav aria-label="Legal">
+        <a href="privacidad.html">Privacidad</a>
+        <a href="terminos.html">Términos</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
