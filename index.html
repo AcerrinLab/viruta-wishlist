@@ -24,7 +24,7 @@
   <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body data-role="client">
-  <div class="ambient" aria-hidden="true"></div>
+  <div class="ambient" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
 
   <!-- Header -->
   <header class="site-header">
@@ -36,11 +36,11 @@
           <path d="M9 31h22" class="mark-plank" />
           <path d="M12 21c4-1 7-3 8-7" class="mark-curl mark-curl-2" />
         </svg>
-        <span class="brand-name">Viruta</span>
+        <span class="brand-name">VIRUTA</span>
       </a>
-      <span class="phase-badge">
+      <span class="phase-badge glass">
         <span class="dot" aria-hidden="true"></span>
-        Fase Beta Jujuy · Solar Train Hackathon · jujuy.dev
+        <span>Fase Beta Jujuy<span class="hide-sm"> · Solar Train Hackathon</span> · jujuy.dev</span>
       </span>
     </div>
   </header>
@@ -48,9 +48,13 @@
   <main>
     <!-- Hero -->
     <section class="hero container">
-      <p class="eyebrow">Infraestructura digital y modelado paramétrico para conectar artesanos de la madera con diseños contemporáneos a medida</p>
+      <!-- Subtitulo animado con datos de la encuesta (config.js -> encuesta) -->
+      <div class="ticker glass" id="survey" role="region" aria-roledescription="carrusel" aria-label="Lo que nos dijo Jujuy en la encuesta">
+        <div class="ticker-track" id="survey-track" aria-live="off"></div>
+        <div class="ticker-dots" id="survey-dots" role="tablist" aria-label="Elegí un dato"></div>
+      </div>
 
-      <div class="role-toggle" role="tablist" aria-label="Elegí tu perfil">
+      <div class="role-toggle glass" role="tablist" aria-label="Elegí tu perfil">
         <button type="button" role="tab" id="tab-client" class="role-btn" data-role-btn="client" aria-selected="true" aria-controls="panel">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
           Soy Cliente / Diseñador
@@ -79,15 +83,15 @@
         <div class="hero-benefits">
           <div data-show="client">
             <ul class="benefits" data-benefits="cliente">
-              <li class="benefit">
+              <li class="benefit glass">
                 <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/></svg></span>
                 <div><h3>A definir</h3><p>A definir</p></div>
               </li>
-              <li class="benefit">
+              <li class="benefit glass">
                 <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></span>
                 <div><h3>A definir</h3><p>A definir</p></div>
               </li>
-              <li class="benefit">
+              <li class="benefit glass">
                 <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span>
                 <div><h3>A definir</h3><p>A definir</p></div>
               </li>
@@ -95,15 +99,15 @@
           </div>
           <div data-show="workshop" hidden>
             <ul class="benefits" data-benefits="taller">
-              <li class="benefit">
+              <li class="benefit glass">
                 <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg></span>
                 <div><h3>A definir</h3><p>A definir</p></div>
               </li>
-              <li class="benefit">
+              <li class="benefit glass">
                 <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
                 <div><h3>A definir</h3><p>A definir</p></div>
               </li>
-              <li class="benefit">
+              <li class="benefit glass">
                 <span class="benefit-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="m15 15 1.5 1.5L19 14"/></svg></span>
                 <div><h3>A definir</h3><p>A definir</p></div>
               </li>
@@ -116,7 +120,7 @@
         </div>
 
         <!-- Formularios -->
-        <div class="form-card">
+        <div class="form-card glass glass-strong">
           <!-- Formulario A: Cliente -->
           <form id="form-client" data-show="client" novalidate>
             <h2>Sumate a la lista de espera</h2>
@@ -232,30 +236,14 @@
       </div>
     </section>
 
-    <!-- Datos de la encuesta (carrusel). Los datos salen de config.js -->
-    <section class="container section" aria-roledescription="carrusel" aria-label="Datos de nuestra encuesta">
-      <div class="survey" id="survey">
-        <div class="survey-track" id="survey-track" aria-live="polite"></div>
-        <div class="survey-controls">
-          <button type="button" class="survey-arrow" id="survey-prev" aria-label="Dato anterior">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>
-          </button>
-          <div class="survey-dots" id="survey-dots" role="tablist" aria-label="Elegí un dato"></div>
-          <button type="button" class="survey-arrow" id="survey-next" aria-label="Dato siguiente">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-          </button>
-        </div>
-      </div>
-    </section>
-
     <!-- Stack -->
     <section class="container section stack">
       <h2 class="section-label">Arquitectura de confianza</h2>
       <ul class="stack-pills">
-        <li class="pill">Spring Boot 3</li>
-        <li class="pill">Three.js CAD</li>
-        <li class="pill">Gemini AI Vision</li>
-        <li class="pill">Mercado Pago Escrow</li>
+        <li class="pill glass">Spring Boot 4</li>
+        <li class="pill glass">Three.js CAD</li>
+        <li class="pill glass">Gemini AI Vision</li>
+        <li class="pill glass">Mercado Pago Escrow</li>
       </ul>
     </section>
   </main>

@@ -102,72 +102,72 @@
     else document.getElementById("founder-note").hidden = true;
   })();
 
-  /* ---------- Carrusel de datos de la encuesta (config.js -> encuesta) ---------- */
-  (function surveyCarousel() {
+  /* ---------- Subtitulo animado con datos de la encuesta (config.js -> encuesta) ---------- */
+  (function surveyTicker() {
     var E = CONFIG.encuesta || {};
     var datos = E.datos || [];
     var root = document.getElementById("survey");
     if (!root) return;
-    if (!datos.length) { root.closest("section").hidden = true; return; }
+    if (!datos.length) { root.hidden = true; return; }
 
     var track = document.getElementById("survey-track");
     var dots = document.getElementById("survey-dots");
-    var slides = [];
-    var current = 0, timer = null, paused = false;
+    var slides = [], current = 0, timer = null, paused = false;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var ms = Math.max(3, E.segundosPorDato || 6) * 1000;
+    var ms = Math.max(3, E.segundosPorDato || 5) * 1000;
+    root.style.setProperty("--ticker-ms", ms + "ms");
 
     datos.forEach(function (d, i) {
-      var slide = document.createElement("div");
-      slide.className = "survey-slide";
-      slide.setAttribute("role", "group");
-      slide.setAttribute("aria-roledescription", "dato");
-      slide.setAttribute("aria-label", (i + 1) + " de " + datos.length);
-      slide.innerHTML = '<div class="survey-stat"></div><div class="survey-body"><p class="survey-text"></p><p class="survey-source"></p></div>';
-      slide.querySelector(".survey-stat").textContent = d.valor;
-      slide.querySelector(".survey-text").textContent = d.texto;
-      slide.querySelector(".survey-source").textContent =
-        "Fuente: " + (d.fuente || E.fuente || "Encuesta Viruta") + (d.muestra ? " · " + d.muestra : "");
-      slide.hidden = i !== 0;
+      var slide = document.createElement("p");
+      slide.className = "ticker-slide" + (i === 0 ? " is-active" : "");
+      slide.setAttribute("aria-hidden", i === 0 ? "false" : "true");
+      slide.innerHTML = '<strong class="ticker-stat"></strong> <span class="ticker-text"></span> <span class="ticker-src"></span>';
+      slide.querySelector(".ticker-stat").textContent = d.valor;
+      slide.querySelector(".ticker-text").textContent = d.texto;
+      slide.querySelector(".ticker-src").textContent =
+        (d.fuente || E.fuente || "Encuesta Viruta") + (d.muestra ? " · " + d.muestra : "");
       track.appendChild(slide);
       slides.push(slide);
 
       var dot = document.createElement("button");
       dot.type = "button";
-      dot.className = "survey-dot";
+      dot.className = "ticker-dot" + (i === 0 ? " is-active" : "");
       dot.setAttribute("role", "tab");
-      dot.setAttribute("aria-label", "Dato " + (i + 1));
+      dot.setAttribute("aria-label", "Dato " + (i + 1) + " de " + datos.length);
       dot.setAttribute("aria-selected", i === 0 ? "true" : "false");
+      dot.innerHTML = "<span></span>";
       dot.addEventListener("click", function () { go(i); restart(); });
       dots.appendChild(dot);
     });
 
-    if (datos.length < 2) { root.querySelector(".survey-controls").hidden = true; return; }
+    if (datos.length < 2) { dots.hidden = true; return; }
 
     function go(i) {
       var n = slides.length;
       i = ((i % n) + n) % n;
       if (i === current) return;
-      slides[current].hidden = true;
+      slides[current].classList.remove("is-active");
+      slides[current].setAttribute("aria-hidden", "true");
+      dots.children[current].classList.remove("is-active");
       dots.children[current].setAttribute("aria-selected", "false");
       current = i;
-      slides[current].hidden = false;
-      slides[current].classList.remove("fade-in");
-      void slides[current].offsetWidth;
-      slides[current].classList.add("fade-in");
-      dots.children[current].setAttribute("aria-selected", "true");
+      slides[current].classList.add("is-active");
+      slides[current].setAttribute("aria-hidden", "false");
+      var dot = dots.children[current];
+      dot.classList.remove("is-active"); void dot.offsetWidth; dot.classList.add("is-active");
+      dot.setAttribute("aria-selected", "true");
     }
     function restart() {
       clearInterval(timer);
+      root.classList.toggle("is-paused", paused || reduce);
       if (reduce || paused) return;
+      var dot = dots.children[current];
+      dot.classList.remove("is-active"); void dot.offsetWidth; dot.classList.add("is-active");
       timer = setInterval(function () { go(current + 1); }, ms);
     }
 
-    document.getElementById("survey-prev").addEventListener("click", function () { go(current - 1); restart(); });
-    document.getElementById("survey-next").addEventListener("click", function () { go(current + 1); restart(); });
-
-    root.addEventListener("mouseenter", function () { paused = true; restart(); });
-    root.addEventListener("mouseleave", function () { paused = false; restart(); });
+    root.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") { paused = true; restart(); } });
+    root.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") { paused = false; restart(); } });
     root.addEventListener("focusin", function () { paused = true; restart(); });
     root.addEventListener("focusout", function () { paused = false; restart(); });
     document.addEventListener("visibilitychange", function () { paused = document.hidden; restart(); });
