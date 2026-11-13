@@ -196,11 +196,17 @@
     }
     return fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      /* text/plain evita el preflight CORS (necesario para Google Apps Script) */
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(payload)
     }).then(function (res) {
       if (!res.ok) throw new Error("HTTP " + res.status);
-      return res;
+      return res.text().then(function (txt) {
+        var data = null;
+        try { data = JSON.parse(txt); } catch (e) { /* respuesta sin JSON: se toma como OK */ }
+        if (data && data.ok === false) throw new Error(data.error || "El servidor rechazo el envio");
+        return data;
+      });
     });
   }
 
